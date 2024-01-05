@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 
 import db from "@/lib/db";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   providers: [
     GoogleProvider({
