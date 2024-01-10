@@ -7,14 +7,20 @@ import { MenuIcon } from "lucide-react";
 
 import { ModeToggle } from "./mode-toggle";
 import useMenuBtnStore from "@/store/menu-btn-store";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const { setIsOpen, isOpen } = useMenuBtnStore();
   const { data } = useSession();
+  const pathname = usePathname();
+  const title =
+    pathname === "/"
+      ? "Home"
+      : pathname.slice(1, pathname.length).split("-").join(" ");
 
   return (
-    <header className="h-[60px] w-full border-b px-3 flex items-center justify-between sticky top-0 bg-background/70 backdrop-blur-sm">
-      <h1 className="text-2xl font-bold">Home</h1>
+    <header className="h-[60px] w-full border-b px-3 flex items-center justify-between sticky top-0 bg-background/70 backdrop-blur-sm z-50">
+      <h1 className="text-2xl font-bold capitalize">{title}</h1>
       <div className="flex items-center gap-2">
         <ModeToggle />
         <Link
