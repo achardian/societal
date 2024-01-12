@@ -3,18 +3,16 @@ import Link from "next/link";
 
 import { convertDate } from "@/lib/utils";
 import { CommentWithAuthor } from "@/types";
+import ProfileImg from "./profile-img";
 
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   return (
     <div key={comment.id} className="my-3">
       <div className="flex items-center gap-2">
         <Link href={`/profile/${comment.author.username}`}>
-          <Image
+          <ProfileImg
             src={comment.author.image as string}
-            alt="user-img"
-            width={30}
-            height={30}
-            className="rounded-full"
+            className="h-9 w-9"
           />
         </Link>
         <div className="flex flex-col">

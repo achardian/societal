@@ -11,6 +11,7 @@ import CommentBtn from "./post-buttons/comment-btn";
 import { convertDate } from "@/lib/utils";
 import SaveBtn from "./post-buttons/save-btn";
 import PostMenu from "./post-menu";
+import ProfileImg from "./profile-img";
 
 type Ref = HTMLDivElement;
 
@@ -19,13 +20,7 @@ const PostCard = ({ post }: { post: PostWithAuthorAndComment }) => {
     <div className="border p-3 rounded-md w-full flex flex-col gap-3">
       <div className="flex justify-between">
         <div className="flex items-start gap-2">
-          <Image
-            src={post?.author.image as string}
-            alt="user-img"
-            width={35}
-            height={35}
-            className="rounded-full object-cover"
-          />
+          <ProfileImg src={post.author.image || ""} className="h-10 w-10" />
           <div className="flex flex-col">
             <span className="text-[14px] font-semibold">
               {post?.author.name}

@@ -1,9 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import Link from "next/link";
-import { Suspense } from "react";
+import ProfileImg from "./profile-img";
 
 const ProfileCard = async () => {
   const session = await getServerSession(authOptions);
@@ -15,14 +14,7 @@ const ProfileCard = async () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-5 border rounded-md">
-      <div className="relative h-20 w-20 rounded-full overflow-clip">
-        <Image
-          src={user?.image || ""}
-          alt="user-img"
-          fill
-          className="object-cover"
-        />
-      </div>
+      <ProfileImg src={user?.image || ""} className="h-20 w-20" />
 
       <span className="italic text-[15px] text-gray-500">
         @{user?.username}

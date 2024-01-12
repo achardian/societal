@@ -2,16 +2,16 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { MenuIcon } from "lucide-react";
 
 import { ModeToggle } from "./mode-toggle";
 import useMenuBtnStore from "@/store/menu-btn-store";
-import { usePathname } from "next/navigation";
+import ProfileImg from "./profile-img";
 
 const Header = () => {
   const { setIsOpen, isOpen } = useMenuBtnStore();
-  const { data } = useSession();
+  const { data: session } = useSession();
   const pathname = usePathname();
   const title =
     pathname === "/"
@@ -24,16 +24,10 @@ const Header = () => {
       <div className="flex items-center gap-2">
         <ModeToggle />
         <Link
-          href={`/profile/${data?.user.username}`}
+          href={`/profile/${session?.user.username}`}
           className="block lg:hidden"
         >
-          <Image
-            src={data?.user.image as string}
-            alt="user-img"
-            width={30}
-            height={30}
-            className="rounded-full"
-          />
+          <ProfileImg src={session?.user.image as string} className="h-8 w-8" />
         </Link>
         <button onClick={() => setIsOpen(!isOpen)} className="flex lg:hidden">
           <MenuIcon />

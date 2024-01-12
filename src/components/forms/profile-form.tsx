@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import Image from "next/image";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -22,6 +21,8 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { UploadButton } from "@/lib/uploadthing";
+import ProfileImg from "../profile-img";
+import { useSession } from "next-auth/react";
 
 const ProfileForm = ({ profile }: { profile: User }) => {
   const form = useForm<TProfileSchema>({
@@ -39,6 +40,7 @@ const ProfileForm = ({ profile }: { profile: User }) => {
   });
 
   const router = useRouter();
+  const { update } = useSession();
 
   const updateProfile = async (values: TProfileSchema) => {
     try {
@@ -61,7 +63,8 @@ const ProfileForm = ({ profile }: { profile: User }) => {
   });
 
   const onSubmit = async (values: TProfileSchema) => {
-    mutateAsync(values);
+    await mutateAsync(values);
+    update({ image: values.image });
   };
 
   return (
@@ -75,14 +78,7 @@ const ProfileForm = ({ profile }: { profile: User }) => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="flex flex-col items-center justify-center">
-              <div className="relative w-40 h-40 rounded-full overflow-clip">
-                <Image
-                  src={field.value || ""}
-                  alt="user-img"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <ProfileImg src={field.value || ""} className="w-40 h-40" />
               <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => field.onChange(res[0].url)}

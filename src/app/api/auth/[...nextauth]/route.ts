@@ -72,6 +72,13 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
+    jwt({ token, trigger, session }) {
+      if (trigger === "update" && session?.image) {
+        // Note, that `session` can be any arbitrary object, remember to validate it!
+        token.picture = session.image;
+      }
+      return Promise.resolve(token);
+    },
   },
   secret: process.env.NEXTAUTH_SECRET as string,
   pages: {
