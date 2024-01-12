@@ -44,7 +44,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
-  username      String?
+  username      String?   @unique
   bio           String?
   location      String?
   job           String?
