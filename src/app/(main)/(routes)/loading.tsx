@@ -1,11 +1,17 @@
+import PostSkeleton from "@/components/skeletons/post-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
+  const skeletons = new Array(5);
+
   return (
-    <div className="flex flex-col gap-3">
-      {Array(10).map((item, i) => (
-        <Skeleton key={i} className="h-[230px] w-full rounded-md" />
-      ))}
+    <div className="flex flex-col gap-3 p-3">
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
     </div>
   );
 };

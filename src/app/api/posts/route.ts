@@ -38,7 +38,27 @@ export const GET = async (req: Request) => {
       return NextResponse.json("Unathorized", { status: 401 });
 
     const url = new URL(req.url);
+    const userId = url.searchParams.get("userId");
     const skip = url.searchParams.get("skip");
+
+    if (userId) {
+      const posts = await db.post.findMany({
+        where: {
+          userId,
+        },
+        skip: Number(skip),
+        take: 10,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          author: true,
+          comments: true,
+        },
+      });
+
+      return NextResponse.json(posts, { status: 200 });
+    }
 
     const posts = await db.post.findMany({
       skip: Number(skip),
