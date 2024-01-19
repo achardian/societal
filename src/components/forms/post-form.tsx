@@ -11,11 +11,11 @@ import { useState } from "react";
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
 import FileUploader from "../file-uploader";
-import { MediaType } from "@prisma/client";
+import { MediaType, Post } from "@prisma/client";
 import axios from "axios";
 import { toast } from "sonner";
 
-const PostForm = () => {
+const PostForm = ({ post }: { post?: Post }) => {
   const { theme } = useTheme();
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [media, setMedia] = useState<{ isOpen: boolean; type: MediaType }>({
@@ -26,9 +26,9 @@ const PostForm = () => {
   const form = useForm<TPostSchema>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      content: "",
-      mediaUrl: "",
-      mediaType: "TEXT",
+      content: post?.content || "",
+      mediaUrl: post?.mediaUrl || "",
+      mediaType: post?.mediaType || "TEXT",
     },
   });
 
@@ -53,9 +53,13 @@ const PostForm = () => {
     }
 
     try {
-      await axios.post("/api/posts", values);
-      toast.success("Created new post!");
-      form.reset();
+      if (post) {
+        await axios.patch(`/api/posts/${post.id}`, values);
+        toast.success("Updated post!");
+      } else {
+        await axios.post("/api/posts", values);
+        toast.success("Created new post!");
+      }
     } catch (error) {
       toast.error("Failed to create post");
     }

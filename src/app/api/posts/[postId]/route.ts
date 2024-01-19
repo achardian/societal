@@ -4,6 +4,28 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
+export const PATCH = async (
+  req: Request,
+  { params }: { params: { postId: string } }
+) => {
+  try {
+    const values = await req.json();
+    await db.post.update({
+      where: {
+        id: params.postId,
+      },
+      data: {
+        ...values,
+      },
+    });
+    revalidatePath("/", "layout");
+    return NextResponse.json({ success: true }, { status: 201 });
+  } catch (error) {
+    console.log("[PATCH POST]", error);
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const DELETE = async (
   req: Request,
   { params }: { params: { postId: string } }

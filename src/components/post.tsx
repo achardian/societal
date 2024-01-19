@@ -77,4 +77,6 @@ const Post = forwardRef<Ref, { post: PostWithAuthorAndComment }>(
   }
 );
 
+Post.displayName = "Post";
+
 export default Post;

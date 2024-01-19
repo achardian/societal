@@ -22,8 +22,6 @@ const PostMenu = ({
 }) => {
   const { data: session } = useSession();
 
-  if (session?.user.id !== authorId) return null;
-
   const deletePost = async () => {
     try {
       const { data } = await axios.delete(`/api/posts/${postId}`);
@@ -43,6 +41,8 @@ const PostMenu = ({
     },
   });
 
+  if (session?.user.id !== authorId) return null;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -53,7 +53,7 @@ const PostMenu = ({
       <DropdownMenuContent>
         <DropdownMenuItem>
           <Link
-            href="/edit-post"
+            href={`/edit-post/${postId}`}
             className="p-3 flex items-center justify-center w-full gap-3"
           >
             <Edit className="h-4 w-4" />

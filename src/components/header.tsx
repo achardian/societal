@@ -13,14 +13,25 @@ const Header = () => {
   const { setIsOpen, isOpen } = useMenuBtnStore();
   const { data: session } = useSession();
   const pathname = usePathname();
-  const title =
-    pathname === "/"
-      ? "Home"
-      : pathname.slice(1, pathname.length).split("-").join(" ");
+  const arrayPathname = pathname.split("/");
+
+  const getTitle = () => {
+    if (pathname === "/") {
+      return "Home";
+    } else if (pathname.includes("/edit-post")) {
+      return "Edit Post";
+    } else if (arrayPathname.length === 3) {
+      return `${arrayPathname[1]} ${arrayPathname[2]}`;
+    } else {
+      return arrayPathname[1];
+    }
+  };
+
+  const title = getTitle();
 
   return (
     <header className="h-[60px] w-full border-b px-3 flex items-center justify-between sticky top-0 bg-background/70 backdrop-blur-sm z-50">
-      <h1 className="text-2xl font-bold capitalize">{title}</h1>
+      <h1 className="text-2xl font-bold capitalize">{getTitle()}</h1>
       <div className="flex items-center gap-2">
         <ModeToggle />
         <Link
