@@ -1,3 +1,3 @@
 export { default } from "next-auth/middleware";
 
-export const config = { matcher: ["/", "/create-post", "/profile"] };
+export const config = { matcher: "/((?!signin|signup).*)(.+)" };

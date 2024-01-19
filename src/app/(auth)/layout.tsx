@@ -1,7 +1,14 @@
 import Logo from "@/components/logo";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) redirect("/");
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex-1 h-screen static md:sticky top-0 flex flex-col justify-center items-center bg-main text-white p-3">
