@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
-import { formatDistance } from "date-fns";
+import { format, formatDistance } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -7,7 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const convertDate = (date: Date) => {
-  return formatDistance(new Date(date), new Date(), {
+  const distance = formatDistance(new Date(date), new Date(), {
     addSuffix: true,
   });
+  const dateTime = format(new Date(date), "PP");
+  return distance.includes("days ago") ? dateTime : distance;
 };
