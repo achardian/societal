@@ -31,7 +31,7 @@ const Page = async ({ params }: { params: { username: string } }) => {
   return (
     <div className="px-3 py-5">
       <div className="flex flex-col gap-5">
-        <div className="flex flex-col items-center md:flex-row flex-1 gap-5">
+        <div className="flex flex-col items-center md:flex-row text-center md:text-left flex-1 gap-5">
           <ProfileImg src={profile.image as string} className="w-32 h-32" />
           <div className="flex-1 flex flex-col gap-1">
             <h2 className="text-xl font-bold">{profile.name}</h2>

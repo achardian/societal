@@ -1,7 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Home, LogOut, PenBox, Search, UserCog2 } from "lucide-react";
+import {
+  Bookmark,
+  Heart,
+  Home,
+  LogOut,
+  PenBox,
+  Search,
+  UserCog2,
+} from "lucide-react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
@@ -28,6 +36,16 @@ const Sidebar = () => {
       icon: Search,
     },
     {
+      title: "Favorites",
+      path: "/favorites",
+      icon: Heart,
+    },
+    {
+      title: "Bookmarks",
+      path: "/bookmarks",
+      icon: Bookmark,
+    },
+    {
       title: "Profile Settings",
       path: "/profile/settings",
       icon: UserCog2,
@@ -35,14 +53,14 @@ const Sidebar = () => {
   ];
 
   const pathname = usePathname();
-  const { isOpen } = useMenuBtnStore();
+  const { isOpen, setIsOpen } = useMenuBtnStore();
 
   return (
     <aside
       className={cn(
         "flex-1 border-x h-screen lg:sticky fixed top-0 flex flex-col gap-1 lg:translate-x-0 -translate-x-full duration-200 ease-in-out",
         isOpen
-          ? "translate-x-0 z-50 bg-background w-[80%]"
+          ? "translate-x-0 z-[100] bg-background w-[80%]"
           : "-translate-x-full"
       )}
     >
@@ -54,6 +72,7 @@ const Sidebar = () => {
         <Link
           key={link.path}
           href={link.path}
+          onClick={() => setIsOpen(false)}
           className={cn(
             "text-xl flex items-center md:justify-center lg:justify-start gap-3 p-3 mx-3 font-semibold rounded-md hover:bg-blue-600 hover:text-white",
             pathname === link.path && "bg-blue-700 text-white"
