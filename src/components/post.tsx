@@ -12,6 +12,7 @@ import { convertDate } from "@/lib/utils";
 import SaveBtn from "./post-buttons/save-btn";
 import PostMenu from "./post-menu";
 import ProfileImg from "./profile-img";
+import FollowBtn from "./post-buttons/follow-btn";
 
 type Ref = HTMLDivElement;
 
@@ -34,7 +35,13 @@ const PostCard = ({ post }: { post: PostWithAuthorAndComment }) => {
           </div>
         </div>
 
-        <PostMenu authorId={post.author.id} postId={post.id} />
+        <div className="flex items-center gap-2">
+          <FollowBtn
+            followers={post.author.followers}
+            authorId={post.author.id}
+          />
+          <PostMenu authorId={post.author.id} postId={post.id} />
+        </div>
       </div>
       <p>{post.content}</p>
       {post.mediaType === "IMAGE" && (

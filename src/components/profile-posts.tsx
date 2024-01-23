@@ -2,7 +2,6 @@
 
 import { PostWithAuthorAndComment } from "@/types";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
@@ -36,7 +35,7 @@ const ProfilePosts = ({ profileId }: { profileId: string }) => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   if (isFetching)
     return (

@@ -20,6 +20,8 @@ const Header = () => {
       return "Home";
     } else if (pathname.includes("/edit-post")) {
       return "Edit Post";
+    } else if (arrayPathname.includes("profile")) {
+      return arrayPathname[1];
     } else if (arrayPathname.length === 3) {
       return `${arrayPathname[1]} ${arrayPathname[2]}`;
     } else {

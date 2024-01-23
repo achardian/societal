@@ -53,6 +53,8 @@ model User {
   sessions      Session[]
   likeIds       String[]
   saveIds       String[]
+  followers     String[]  @db.ObjectId
+  followings    String[]  @db.ObjectId
 
   createdAt DateTime  @default(now())
   posts     Post[]
