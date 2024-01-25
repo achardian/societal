@@ -14,6 +14,7 @@ const FollowBtn = ({
 }) => {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [isFollowed, setIsFollowed] = useState(
     followers.includes(session?.user.id as string)
@@ -47,6 +48,7 @@ const FollowBtn = ({
     },
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
+      router.refresh();
     },
   });
 

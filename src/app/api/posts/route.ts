@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { TPostSchema } from "@/schema/post-schema";
 import db from "@/lib/db";
 import { MediaType } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const POST = async (req: Request) => {
   try {
@@ -23,6 +24,8 @@ export const POST = async (req: Request) => {
       },
     });
 
+    revalidatePath("/", "layout");
+
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
     console.log("[POST POSTS]", error);
@@ -41,6 +44,8 @@ export const GET = async (req: Request) => {
     const userId = url.searchParams.get("userId");
     const skip = url.searchParams.get("skip");
     const isFollowing = url.searchParams.get("following_feed");
+    const isBookmarks = url.searchParams.get("bookmarks");
+    const isFavorites = url.searchParams.get("favorites");
 
     if (userId) {
       const posts = await db.post.findMany({
@@ -74,6 +79,38 @@ export const GET = async (req: Request) => {
         take: 10,
         orderBy: {
           createdAt: "desc",
+        },
+        include: {
+          author: true,
+          comments: true,
+        },
+      });
+
+      return NextResponse.json(posts, { status: 200 });
+    }
+
+    if (isBookmarks) {
+      const posts = await db.post.findMany({
+        where: {
+          saveIds: {
+            has: session.user.id,
+          },
+        },
+        include: {
+          author: true,
+          comments: true,
+        },
+      });
+
+      return NextResponse.json(posts, { status: 200 });
+    }
+
+    if (isFavorites) {
+      const posts = await db.post.findMany({
+        where: {
+          likeIds: {
+            has: session.user.id,
+          },
         },
         include: {
           author: true,

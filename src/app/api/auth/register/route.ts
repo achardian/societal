@@ -41,6 +41,8 @@ export const POST = async (req: Request) => {
         email,
         password: hashedPassword,
         image,
+        followers: [],
+        followings: [],
       },
     });
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Bookmark } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +20,8 @@ const SaveBtn = ({
     saveIds.includes(session?.user.id as string)
   );
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const pathname = usePathname();
 
   const savePost = async () => {
     try {
@@ -45,6 +47,7 @@ const SaveBtn = ({
       setIsSaved(isSaved ? false : true);
     },
     onSuccess: () => {
+      pathname === "/bookmarks" && queryClient.invalidateQueries(["posts"]);
       isSaved
         ? toast.success("Remove from bookmarks")
         : toast.success("Saved this post");
