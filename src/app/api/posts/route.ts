@@ -40,6 +40,7 @@ export const GET = async (req: Request) => {
     const url = new URL(req.url);
     const userId = url.searchParams.get("userId");
     const skip = url.searchParams.get("skip");
+    const isFollowing = url.searchParams.get("following_feed");
 
     if (userId) {
       const posts = await db.post.findMany({
@@ -60,7 +61,39 @@ export const GET = async (req: Request) => {
       return NextResponse.json(posts, { status: 200 });
     }
 
+    if (isFollowing) {
+      const posts = await db.post.findMany({
+        where: {
+          author: {
+            followers: {
+              has: session.user.id,
+            },
+          },
+        },
+        skip: Number(skip),
+        take: 10,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          author: true,
+          comments: true,
+        },
+      });
+
+      return NextResponse.json(posts, { status: 200 });
+    }
+
     const posts = await db.post.findMany({
+      where: {
+        NOT: {
+          author: {
+            followers: {
+              has: session.user.id,
+            },
+          },
+        },
+      },
       skip: Number(skip),
       take: 10,
       orderBy: {

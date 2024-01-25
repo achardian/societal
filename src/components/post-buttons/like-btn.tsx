@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
 const LikeBtn = ({ likes, postId }: { likes: string[]; postId: string }) => {
   const { data: session } = useSession();
@@ -14,8 +14,6 @@ const LikeBtn = ({ likes, postId }: { likes: string[]; postId: string }) => {
     likes.includes(session?.user.id as string)
   );
   const [likesCount, setLikesCount] = useState(likes.length);
-
-  const queryClient = useQueryClient();
 
   const handleLike = async () => {
     try {
@@ -50,9 +48,6 @@ const LikeBtn = ({ likes, postId }: { likes: string[]; postId: string }) => {
         setLikesCount(likesCount - 1);
         setIsLiked(false);
       }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
     },
   });
 

@@ -17,6 +17,7 @@ import { CommentWithAuthor } from "@/types";
 import OvalLoader from "../oval-loader";
 import CommentForm from "../forms/comment-form";
 import Comment from "../comment";
+import ProfileImg from "../profile-img";
 
 const CommentBtn = ({
   postId,
@@ -72,9 +73,10 @@ const CommentBtn = ({
 
         <div>
           <div className="flex items-center gap-2 my-5">
-            <div className="relative h-10 w-10 rounded-full overflow-clip">
-              <Image src={session?.user.image || ""} alt="user-img" fill />
-            </div>
+            <ProfileImg
+              src={session?.user.image as string}
+              className="h-10 w-10"
+            />
             <span>{session?.user.name}</span>
           </div>
 
