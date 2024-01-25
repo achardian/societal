@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
 export const GET = async (

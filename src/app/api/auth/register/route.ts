@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import { TRegisterSchema } from "@/schema/register-schema";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const POST = async (req: Request) => {
   try {

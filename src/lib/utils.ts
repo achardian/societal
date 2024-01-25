@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 import db from "@/lib/db";
 import { NextAuthOptions } from "next-auth";

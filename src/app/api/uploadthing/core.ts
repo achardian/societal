@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/utils";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
 const handleAuth = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return { userId: session?.user.id };
 };

@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import Illustration from "@/assets/social.svg";
 
