@@ -1,8 +1,9 @@
 import Logo from "@/components/logo";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import Illustration from "@/assets/social.svg";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
@@ -14,7 +15,7 @@ const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
       <div className="flex-1 h-screen static md:sticky top-0 flex flex-col justify-center items-center bg-main text-white p-3">
         <div className="relative w-full h-[350px]">
           <Image
-            src="/social.svg"
+            src={Illustration}
             alt="social-illustration"
             fill
             className="object-contain"

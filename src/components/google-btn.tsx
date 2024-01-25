@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import GoogleIcon from "@/assets/google-icon.svg";
 
 const GoogleBtn = () => {
   return (
@@ -17,14 +18,9 @@ const GoogleBtn = () => {
       <Button
         onClick={() => signIn("google", { callbackUrl: "/" })}
         variant="secondary"
-        className="w-full"
+        className="w-full space-x-3"
       >
-        <Image
-          src="/google-icon.svg"
-          alt="google icon"
-          width={25}
-          height={25}
-        />
+        <Image src={GoogleIcon} alt="google icon" width={25} height={25} />
         <span>Continue With Google</span>
       </Button>
     </div>

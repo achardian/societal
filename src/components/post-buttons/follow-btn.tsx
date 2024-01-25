@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -58,7 +60,7 @@ const FollowBtn = ({
     <button
       onClick={() => mutateAsync()}
       className={cn(
-        "text-[13px] font-semibold py-1 px-3 rounded-full",
+        "text-[13px] font-semibold py-1 px-3 rounded-full w-fit",
         isFollowed
           ? "text-red-600 bg-red-600/15"
           : "text-blue-500 bg-blue-500/15"

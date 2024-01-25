@@ -1,3 +1,4 @@
+import FollowBtn from "@/components/post-buttons/follow-btn";
 import ProfileBody from "@/components/profile-body";
 import ProfileImg from "@/components/profile-img";
 import { Separator } from "@/components/ui/separator";
@@ -33,7 +34,7 @@ const Page = async ({ params }: { params: { username: string } }) => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center md:flex-row text-center md:text-left flex-1 gap-5">
           <ProfileImg src={profile.image as string} className="w-32 h-32" />
-          <div className="flex-1 flex flex-col gap-1">
+          <div className="flex-1 flex flex-col gap-2">
             <h2 className="text-xl font-bold">{profile.name}</h2>
             <span className="text-lg italic text-gray-800 dark:text-gray-100">
               @{profile.username}
@@ -42,6 +43,7 @@ const Page = async ({ params }: { params: { username: string } }) => {
               <Calendar className="h-4 w-4" />
               <span>Joined {format(profile.createdAt, "PP")}</span>
             </span>
+            <FollowBtn followers={profile.followers} authorId={profile.id} />
           </div>
           <div className="flex flex-row md:flex-col items-center gap-5 md:gap-3 w-[150px]">
             <div className="flex flex-col items-center justify-center">

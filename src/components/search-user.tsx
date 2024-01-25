@@ -16,6 +16,7 @@ import ProfileImg from "./profile-img";
 import OvalLoader from "./oval-loader";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import SearchIllustration from "@/assets/user-research.svg";
 
 const SearchUser = () => {
   const [name, setName] = useState("");
@@ -81,7 +82,7 @@ const SearchUser = () => {
           !value && "h-[300px]"
         )}
       >
-        {!value && <Image src="/user-research.svg" alt="illustration" fill />}
+        {!value && <Image src={SearchIllustration} alt="illustration" fill />}
         {value && !users && !isFetching && <span>No User Found!</span>}
       </CommandEmpty>
     </Command>
